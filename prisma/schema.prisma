@@ -12,9 +12,16 @@ datasource db {
 }
 
 model User {
-id Int @id @default(autoincrement())
+user_id Int @id @default(autoincrement())
 first_name String @db.VarChar(30)
 surname String @db.VarChar(30)
 email String @db.VarChar(60) @unique
 pwd  String @db.VarChar(60)
+}
+
+model List {
+list_id Int @id @default(autoincrement())
+title String @db.VarChar(30)
+user_id
+user User @relation()
 }

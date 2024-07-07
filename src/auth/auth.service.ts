@@ -39,12 +39,12 @@ export class AuthService {
     // ** Comparer le mot de passe
     const match = await bcrypt.compare(pwd, user.pwd);
     if (!match) throw new UnauthorizedException('Password does not match.');
-    // ** Retourner un token jwt
+    // ** Retourner un access token jwt
     const payload = {
       sub: user.id,
       email: user.email,
     };
-    const access_token = await this.JwtService.signAsync(payload);
-    return { user: user.email, access_token };
+    const token = await this.JwtService.signAsync(payload);
+    return { user: user.email, token };
   }
 }
