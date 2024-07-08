@@ -13,28 +13,28 @@ export class TasksService {
     }); // OK backend vers BDD en donnant l'id de liste
   }
 
-  findAllTasks(listId: string) {
+  findAllTasks(listId: number) {
     return this.prismaservice.task.findMany({
-      where: { listId: parseInt(listId) },
+      where: { listId },
     }); // OK backend vers BDD en donnant l'id de liste
   }
 
-  findOneTask(id: string) {
+  findOneTask(id: number) {
     return this.prismaservice.task.findUnique({
-      where: { id: parseInt(id) },
+      where: { id },
     }); // OK testé back vers BDD avec taskID entré manuellement
   }
 
-  update(id: string, updateTaskDto: UpdateTaskDto) {
+  update(id: number, updateTaskDto: UpdateTaskDto) {
     return this.prismaservice.task.update({
-      where: { id: parseInt(id) },
+      where: { id },
       data: updateTaskDto,
     }); // OK mais il faut envoyer toutes les données d'identification de la tâche...
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.prismaservice.task.delete({
-      where: { id: parseInt(id) },
+      where: { id },
     }); // OK testé back vers BDD avec taskID entré manuellement
   }
 }
