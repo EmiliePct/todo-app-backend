@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
-// import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -29,5 +29,15 @@ export class TasksController {
   @Get('/taskByTaskId:taskId')
   findOneTask(@Param('taskId') id: string) {
     return this.tasksService.findOneTask(id); // OK testé back vers BDD avec taskID entré manuellement, retourne un objet
+  }
+
+  @Patch(':taskId')
+  update(@Param('taskId') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.tasksService.update(id, updateTaskDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.tasksService.remove(id); // OK testé back vers BDD avec listID entré manuellement, retourne la liste supprimée ?. Supprime bien les tâches een cascade.
   }
 }

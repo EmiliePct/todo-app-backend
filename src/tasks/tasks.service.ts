@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
-// import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -16,11 +16,24 @@ export class TasksService {
   findAllTasks(listId: string) {
     return this.prismaservice.task.findMany({
       where: { listId: parseInt(listId) },
-    });  // OK backend vers BDD en donnant l'id de liste
+    }); // OK backend vers BDD en donnant l'id de liste
   }
 
   findOneTask(id: string) {
     return this.prismaservice.task.findUnique({
+      where: { id: parseInt(id) },
+    }); // OK testé back vers BDD avec taskID entré manuellement
+  }
+
+  update(id: string, updateTaskDto: UpdateTaskDto) {
+    return this.prismaservice.task.update({
+      where: { id: parseInt(id) },
+      data: updateTaskDto,
+    }); // OK mais il faut envoyer toutes les données d'identification de la tâche...
+  }
+
+  remove(id: string) {
+    return this.prismaservice.task.delete({
       where: { id: parseInt(id) },
     }); // OK testé back vers BDD avec taskID entré manuellement
   }
