@@ -1,22 +1,33 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from 'src/interface/task.interface';
+import { CreateTaskDto } from './dto/create-task.dto';
+// import { UpdateTaskDto } from './dto/update-task.dto';
 
-//va écouter localhost:3000/tasks
 @Controller('tasks')
 export class TasksController {
-  // notre injecteur doit fournir une instance de tasksService, sous fourme d'un accesseur
   constructor(private readonly tasksService: TasksService) {}
 
-  @Get()
-  getAllTasks(): Task[] {
-    return this.tasksService.getAllTasks();
+  @Post()
+  create(@Body() createTaskDto: CreateTaskDto) {
+    createTaskDto.deadline = new Date(createTaskDto.deadline);
+    return this.tasksService.create(createTaskDto); // OK testé back vers BDD avec listID entré manuellement,
   }
 
-  @Post()
-  createTask(@Body() newTask) {
-    //@Body nous permet de récupérer le corps de la requête vers le serveur
-    console.log('newTask', newTask);
-    this.tasksService.create(newTask);
+  @Get('/tasksByListId:listId')
+  findAllTasks(@Param('listId') listId: string) {
+    return this.tasksService.findAllTasks(listId); // OK testé back vers BDD avec listID entré manuellement, retourne un tableau d'objets
+  }
+
+  @Get('/taskByTaskId:taskId')
+  findOneTask(@Param('taskId') id: string) {
+    return this.tasksService.findOneTask(id); // OK testé back vers BDD avec taskID entré manuellement, retourne un objet
   }
 }

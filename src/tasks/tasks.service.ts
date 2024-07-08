@@ -1,31 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { Task } from 'src/interface/task.interface';
+import { CreateTaskDto } from './dto/create-task.dto';
+// import { UpdateTaskDto } from './dto/update-task.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TasksService {
-  tasks: Task[] = [
-    {
-      title: 'create tasks app',
-      description: 'create NestJS tasks app',
-      isDone: true,
-    },
-    {
-      title: 'create data base',
-      description: 'create postgreSQL data base',
-      isDone: false,
-    },
-    {
-      title: 'create front end',
-      description: 'create react front end',
-      isDone: false,
-    },
-  ];
+  constructor(private prismaservice: PrismaService) {}
 
-  getAllTasks(): Task[] {
-    return this.tasks;
+  create(createTaskDto: CreateTaskDto) {
+    return this.prismaservice.task.create({
+      data: createTaskDto,
+    }); // OK backend vers BDD en donnant l'id de liste
   }
 
-  create(task: Task) {
-    this.tasks = [...this.tasks, task];
+  findAllTasks(listId: string) {
+    return this.prismaservice.task.findMany({
+      where: { listId: parseInt(listId) },
+    });  // OK backend vers BDD en donnant l'id de liste
+  }
+
+  findOneTask(id: string) {
+    return this.prismaservice.task.findUnique({
+      where: { id: parseInt(id) },
+    }); // OK testé back vers BDD avec taskID entré manuellement
   }
 }

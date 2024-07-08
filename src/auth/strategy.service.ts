@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-//   //était utilisée dans une vidéo de Houssam mais pour autoriser la suppression de compte je crois... à voir si c'est utile plus tard ?
+//   //Vérifier que le token est valide ?
 //   async validate(payload: Payload) {
 //     const user = await this.prismaService.user.findUnique({
 //       where: { email: payload.email },

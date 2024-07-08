@@ -12,16 +12,28 @@ datasource db {
 }
 
 model User {
-user_id Int @id @default(autoincrement())
+id Int @id @default(autoincrement())
 first_name String @db.VarChar(30)
 surname String @db.VarChar(30)
 email String @db.VarChar(60) @unique
 pwd  String @db.VarChar(60)
+lists List[]
 }
 
 model List {
-list_id Int @id @default(autoincrement())
-title String @db.VarChar(30)
-user_id
-user User @relation()
+id Int @id @default(autoincrement())
+title String @db.VarChar(60) @unique
+user User @relation(fields: [userId], references: [id])
+userId Int
+tasks Task[]
+}
+
+model Task {
+id Int @id @default(autoincrement())
+title String @db.VarChar(60)
+description String? @db.VarChar(255)
+deadline DateTime @db.Date
+is_done Boolean @db.Boolean @default(false)
+list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+listId Int
 }
