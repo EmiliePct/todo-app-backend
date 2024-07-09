@@ -6,13 +6,22 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { ListEntity } from './entities/list.entity';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';// pour grouper les endpoints sur Swagger et créer des réponses claires ou du bon type
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'; // pour grouper les endpoints sur Swagger et créer des réponses claires ou du bon type
 
 @Controller('lists')
+@UseGuards(JwtAuthGuard) // pour protéger toutes les API
+@ApiBearerAuth() // pour signaler à swagger que les requêtes sont protégées
 @ApiTags('lists')
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}

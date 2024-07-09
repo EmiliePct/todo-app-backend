@@ -2,8 +2,6 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import { ValidationPipe } from '@nestjs/common';
-
 //Pour créer un intercepteur pour exclure des propriétés d'objets de réponse
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
@@ -18,6 +16,7 @@ async function bootstrap() {
     .setTitle('Todo-app')
     .setDescription('Todo-app - test technique')
     .setVersion('0.1')
+    .addBearerAuth() // pour pouvoir autoriser les tests sur les API protégées dans Swagger avec un token
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
