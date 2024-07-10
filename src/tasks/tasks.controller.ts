@@ -31,7 +31,7 @@ export class TasksController {
   @Post()
   @ApiCreatedResponse({ type: TaskEntity })
   create(@Body() createTaskDto: CreateTaskDto) {
-    createTaskDto.deadline = new Date(createTaskDto.deadline);
+    // createTaskDto.deadline = new Date(createTaskDto.deadline);
     return this.tasksService.create(createTaskDto); // OK testé back vers BDD avec listID entré manuellement,
   }
 

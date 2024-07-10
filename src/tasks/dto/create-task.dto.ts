@@ -2,7 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsDate,
+  IsISO8601,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -22,10 +22,12 @@ export class CreateTaskDto {
   @ApiProperty({ required: false })
   description?: string;
 
-  @IsDate()
+  @IsISO8601({
+    strict: true,
+  })
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  deadline: Date;
+  deadline: string;
 
   @IsBoolean()
   @IsNotEmpty()

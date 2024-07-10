@@ -18,6 +18,9 @@ export class TaskEntity implements Task {
   @ApiProperty({ required: true, default: false })
   is_done: boolean;
 
+  @ApiProperty()
+  createdAt: Date;
+
   @ApiProperty({ required: true })
   listId: number;
 }
