@@ -1,4 +1,4 @@
-// Le décorateur @ApiProperty decorators est obligatoire pour que les propriétés de classe soient visibles du module Swagger
+// Le décorateur @ApiProperty est obligatoire pour que les propriétés de classe soient visibles du module Swagger
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,

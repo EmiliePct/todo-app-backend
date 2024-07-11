@@ -31,20 +31,19 @@ export class TasksController {
   @Post()
   @ApiCreatedResponse({ type: TaskEntity })
   create(@Body() createTaskDto: CreateTaskDto) {
-    // createTaskDto.deadline = new Date(createTaskDto.deadline);
-    return this.tasksService.create(createTaskDto); // OK testé back vers BDD avec listID entré manuellement,
+    return this.tasksService.create(createTaskDto);
   }
 
   @Get('/tasksByListId:listId')
   @ApiOkResponse({ type: TaskEntity, isArray: true })
   findAllTasks(@Param('listId', ParseIntPipe) listId: number) {
-    return this.tasksService.findAllTasks(listId); // OK testé back vers BDD avec listID entré manuellement, retourne un tableau d'objets
+    return this.tasksService.findAllTasks(listId);
   }
 
   @Get('/taskByTaskId:taskId')
   @ApiOkResponse({ type: TaskEntity })
   findOneTask(@Param('taskId', ParseIntPipe) id: number) {
-    return this.tasksService.findOneTask(id); // OK testé back vers BDD avec taskID entré manuellement, retourne un objet
+    return this.tasksService.findOneTask(id);
   }
 
   @Patch(':taskId')
@@ -59,6 +58,6 @@ export class TasksController {
   @Delete(':id')
   @ApiOkResponse({ type: TaskEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.tasksService.remove(id); // OK testé back vers BDD avec listID entré manuellement, retourne la liste supprimée ?. Supprime bien les tâches een cascade.
+    return this.tasksService.remove(id);
   }
 }
